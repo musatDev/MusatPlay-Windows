@@ -1,4 +1,4 @@
-param([string]$WixHome = '', [string]$Version = '1.1.2', [switch]$PortableOnly)
+param([string]$WixHome = '', [string]$Version = '1.1.3', [switch]$PortableOnly)
 $ErrorActionPreference = 'Stop'
 $project = Split-Path $PSScriptRoot -Parent
 Push-Location $project
@@ -16,9 +16,9 @@ try {
     Copy-Item "$build\lib" $inputDir -Recurse -Force
     & java -jar "$build\MusatPlay.jar" --write-icon target\MusatPlay.ico
     if ($LASTEXITCODE -ne 0) { throw 'Icon generation failed.' }
-    $runtime = Join-Path $build 'java-runtime-en-US'
+    $runtime = Join-Path $build 'java-runtime-en-US-tls'
     if (!(Test-Path $runtime)) {
-        & jlink --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.net.http,java.prefs,jdk.unsupported `
+        & jlink --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.net.http,java.prefs,jdk.unsupported,jdk.crypto.ec `
             --strip-debug --no-header-files --no-man-pages --strip-native-commands --compress=2 --output $runtime
         if ($LASTEXITCODE -ne 0) { throw 'Java runtime creation failed.' }
     }
@@ -28,6 +28,11 @@ try {
         --dest $destination --java-options '-Dfile.encoding=UTF-8' --java-options '-Xms16m' --java-options '-Xmx256m'
     if ($LASTEXITCODE -ne 0) { throw 'App image creation failed.' }
     $app = Join-Path $destination 'MusatPlay'
+    $updateCheck = Join-Path $destination 'update-check.txt'
+    $check = Start-Process -FilePath "$app\MusatPlay.exe" -ArgumentList @('--check-updates', ('"' + $updateCheck + '"')) -WindowStyle Hidden -PassThru
+    if (!$check.WaitForExit(45000)) { $check.Kill(); throw 'Packaged update check timed out.' }
+    if ($check.ExitCode -ne 0 -or !(Test-Path -LiteralPath $updateCheck)) { throw 'Packaged HTTPS update check failed.' }
+    Get-Content -LiteralPath $updateCheck | Write-Host
     Copy-Item LICENSE "$app\LICENSE.txt"
     Copy-Item THIRD_PARTY.md $app
     if ($PortableOnly) {
