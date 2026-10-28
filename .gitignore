@@ -1,0 +1,14 @@
+target/
+release/
+.idea/
+.vscode/
+*.iml
+*.log
+*.lck
+.DS_Store
+._*
+.env
+.env.*
+*.p12
+*.pfx
+*.pem
