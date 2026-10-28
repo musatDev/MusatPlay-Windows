@@ -1,31 +1,25 @@
-# MusatPlay for Windows v1.1.2
+# MusatPlay for Windows v1.1.3
 
-The first public Windows release of MusatPlay: an independent desktop wrapper for YouTube Music, built with Java, Swing, and the system WebView2 Runtime.
+Fixes the HTTPS handshake failure shown by **Help → Check for updates…** in v1.1.2.
 
-## Included
+## Fixed
 
-- A clean English-only dark interface with MusatPlay and Help menus.
-- YouTube Music in its own application profile, separate from your everyday browser.
-- Background playback, a system tray menu, and global playback shortcuts.
-- Track notifications with artwork and playback controls.
-- In-app update checks with installer size and SHA-256 verification.
-- Bundled Java: no separate Java setup required.
-- Optional desktop and Start menu shortcuts, an installation folder chooser, and Uninstall.exe.
+- Include Java's `jdk.crypto.ec` security provider in the bundled runtime so secure connections to GitHub can complete.
+- Build a new runtime image instead of reusing the earlier image without elliptic-curve support.
+- Check the real GitHub update endpoint through the packaged Windows EXE during packaging. Packaging stops if that check fails.
 
-## Download and install
+## Install
 
-Download **MusatPlay-Setup-1.1.2.exe** below, exit any running copy of MusatPlay, and run Setup. The **.sha256** file is provided for integrity verification and the application's update mechanism.
+Download **MusatPlay-Setup-1.1.3.exe**, quit MusatPlay, and run Setup. Users of v1.1.2 must install this release manually because its update connection is affected by this bug. Your saved application profile is retained.
 
-**Requirements:** Windows 10/11 x64, internet access, and Microsoft Edge WebView2 Evergreen Runtime. If WebView2 is missing, Setup links to Microsoft's download page before installation starts. A Google account is needed for personalized YouTube Music features.
+Windows 10/11 x64 and Microsoft Edge WebView2 Evergreen Runtime are required. Java is bundled. Optional desktop and Start menu shortcuts and Uninstall.exe are included. The app and installer are unsigned.
 
-## Verification and limitations
+## Verification
 
-The release passes 21 Java tests and 4 JavaScript tests. Packaged native startup and JavaScript execution have been checked through WebView2 on Windows 11 x64. English-only runtime data, installer options, uninstaller presence, and release checksums have been inspected.
+The previous module set reproduces the reported `handshake_failure`; adding `jdk.crypto.ec` makes the same GitHub request succeed. The release passes 21 Java tests and 4 JavaScript tests, plus a live HTTPS update check from the packaged EXE.
 
-These checks do not establish full account/playback compatibility on every machine. Google may restrict embedded-browser sign-in; those restrictions are not bypassed. Windows 10 and full playback scenarios need the manual checks documented in TESTING.md. The app and installer are unsigned, so Windows may show a publisher or SmartScreen warning. RAM use depends on YouTube Music content and WebView2; no fixed performance improvement is claimed.
+The installer and its SHA-256 sidecar are attached below. Account and playback availability remain controlled by YouTube Music.
 
-## License and notice
+## License and independence
 
-Original code is licensed under MIT. Dependency licenses and the bundled Java runtime's legal files remain included.
-
-MusatPlay is an independent, unofficial wrapper, not a music service. It is not affiliated with, endorsed by, or sponsored by Google LLC, YouTube, YouTube Music, or Microsoft. YouTube and YouTube Music are Google LLC trademarks. Playback, account access, subscriptions, and service availability are supplied by YouTube Music. MusatPlay provides no music downloads, ad blocking, or bypass of service/security restrictions.
+MusatPlay is an independent, unofficial YouTube Music wrapper, licensed under MIT. It is not affiliated with, endorsed by, or sponsored by Google LLC, YouTube, YouTube Music, or Microsoft. Third-party components retain their licenses and notices.

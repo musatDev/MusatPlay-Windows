@@ -4,6 +4,8 @@ Automated tests do not replace real account, playback, and desktop testing. Mark
 
 ## Installation and updates
 
+Packaging runs the produced EXE with `--check-updates <report-path>` against the real GitHub endpoint. The EXE must exit successfully and write the report using only its bundled Java runtime. This catches missing TLS providers that unit tests running on a full JDK cannot detect. Internet access to GitHub is required for this packaging check.
+
 - Install on Windows 11 x64 with WebView2 present and confirm no Java installation is needed.
 - On a system without WebView2, confirm the prerequisite screen appears before installation begins and the Microsoft download button works.
 - Test both shortcut choices independently, including no shortcuts.

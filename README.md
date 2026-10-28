@@ -37,7 +37,7 @@ The installer is approximately 39 MB. Installed size and profile/cache storage v
 
 ## Getting started
 
-1. Open the [latest release](https://github.com/musatDev/MusatPlay-Windows/releases/latest) and download **MusatPlay-Setup-1.1.2.exe**.
+1. Open the [latest release](https://github.com/musatDev/MusatPlay-Windows/releases/latest) and download **MusatPlay-Setup-1.1.3.exe**.
 2. Exit any running copy of MusatPlay using **MusatPlay → Quit** or the tray menu.
 3. Run Setup. Choose the installation folder and whether to create desktop and Start menu shortcuts.
 4. If WebView2 is missing, Setup offers Microsoft's download page before installation starts. Install the Evergreen Runtime and select **Check again**.
