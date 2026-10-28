@@ -17,9 +17,11 @@ public final class Launcher {
     private Launcher() {}
 
     public static void main(String[] args) throws Exception {
-        if (args.length == 1 && args[0].equals("--check-updates")) {
+        if (args.length >= 1 && args[0].equals("--check-updates")) {
             var update = new UpdateService().check();
-            System.out.println(update.map(value -> "Update available: " + value.version()).orElse("No newer release is available."));
+            String result = update.map(value -> "Update available: " + value.version()).orElse("No newer release is available.");
+            if (args.length >= 2) java.nio.file.Files.writeString(Path.of(args[1]), result);
+            System.out.println(result);
             return;
         }
         if (args.length >= 2 && args[0].equals("--render-menu-preview")) {
