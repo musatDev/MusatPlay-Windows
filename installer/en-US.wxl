@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <String Id="Language">1033</String>
+  <String Id="NewerInstalled">A newer version of MusatPlay is already installed.</String>
+  <String Id="SetupTitle">MusatPlay Setup</String>
+  <String Id="OptionsTitle">Installation options</String>
+  <String Id="DesktopShortcut">Create a desktop shortcut</String>
+  <String Id="MenuShortcut">Create Start menu shortcuts</String>
+  <String Id="Back">Back</String><String Id="Next">Next</String><String Id="Cancel">Cancel</String>
+</WixLocalization>
